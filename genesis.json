@@ -1,0 +1,764 @@
+{
+  "endpoints": [
+    {
+      "file": "backend/app/endpoints/admin_permissions.py",
+      "prefix": "/admin/permissions",
+      "routes": [
+        {
+          "handler": "list_rules",
+          "method": "GET",
+          "path": "",
+          "response_model": "list[PermissionRuleRead]",
+          "status_code": null
+        },
+        {
+          "handler": "create_rule",
+          "method": "POST",
+          "path": "",
+          "response_model": "PermissionRuleRead",
+          "status_code": 201
+        },
+        {
+          "handler": "list_routes",
+          "method": "GET",
+          "path": "/routes",
+          "response_model": "list[str]",
+          "status_code": null
+        },
+        {
+          "handler": "delete_rule",
+          "method": "DELETE",
+          "path": "/{rule_id}",
+          "response_model": "",
+          "status_code": 204
+        }
+      ]
+    },
+    {
+      "file": "backend/app/endpoints/admin_users.py",
+      "prefix": "/admin/users",
+      "routes": [
+        {
+          "handler": "list_users",
+          "method": "GET",
+          "path": "",
+          "response_model": "list[UserAdminRead]",
+          "status_code": null
+        },
+        {
+          "handler": "delete_user",
+          "method": "DELETE",
+          "path": "/{user_id}",
+          "response_model": "",
+          "status_code": 204
+        },
+        {
+          "handler": "update_roles",
+          "method": "PATCH",
+          "path": "/{user_id}",
+          "response_model": "UserAdminRead",
+          "status_code": null
+        },
+        {
+          "handler": "deactivate_user",
+          "method": "POST",
+          "path": "/{user_id}/deactivate",
+          "response_model": "UserAdminRead",
+          "status_code": null
+        }
+      ]
+    },
+    {
+      "file": "backend/app/endpoints/ai.py",
+      "prefix": "/ai",
+      "routes": [
+        {
+          "handler": "chat",
+          "method": "POST",
+          "path": "/chat",
+          "response_model": "ChatResponse",
+          "status_code": null
+        }
+      ]
+    },
+    {
+      "file": "backend/app/endpoints/analytics.py",
+      "prefix": "/analytics",
+      "routes": [
+        {
+          "handler": "items_summary",
+          "method": "GET",
+          "path": "/items-summary",
+          "response_model": "ItemsSummary",
+          "status_code": null
+        }
+      ]
+    },
+    {
+      "file": "backend/app/endpoints/auth.py",
+      "prefix": "/auth",
+      "routes": [
+        {
+          "handler": "login",
+          "method": "POST",
+          "path": "/login",
+          "response_model": "UserRead",
+          "status_code": null
+        },
+        {
+          "handler": "logout",
+          "method": "POST",
+          "path": "/logout",
+          "response_model": "",
+          "status_code": 204
+        },
+        {
+          "handler": "signup",
+          "method": "POST",
+          "path": "/signup",
+          "response_model": "UserRead",
+          "status_code": 201
+        }
+      ]
+    },
+    {
+      "file": "backend/app/endpoints/documents.py",
+      "prefix": "/documents",
+      "routes": [
+        {
+          "handler": "list_documents",
+          "method": "GET",
+          "path": "",
+          "response_model": "list[DocumentRead]",
+          "status_code": null
+        },
+        {
+          "handler": "create_document",
+          "method": "POST",
+          "path": "",
+          "response_model": "DocumentRead",
+          "status_code": 201
+        },
+        {
+          "handler": "search_documents",
+          "method": "POST",
+          "path": "/search",
+          "response_model": "list[DocumentSearchResult]",
+          "status_code": null
+        }
+      ]
+    },
+    {
+      "file": "backend/app/endpoints/items.py",
+      "prefix": "/items",
+      "routes": [
+        {
+          "handler": "list_items",
+          "method": "GET",
+          "path": "",
+          "response_model": "list[ItemRead]",
+          "status_code": null
+        },
+        {
+          "handler": "create_item",
+          "method": "POST",
+          "path": "",
+          "response_model": "ItemRead",
+          "status_code": 201
+        },
+        {
+          "handler": "delete_item",
+          "method": "DELETE",
+          "path": "/{item_id}",
+          "response_model": "",
+          "status_code": 204
+        }
+      ]
+    },
+    {
+      "file": "backend/app/endpoints/jobs.py",
+      "prefix": "/jobs",
+      "routes": [
+        {
+          "handler": "start_job",
+          "method": "POST",
+          "path": "",
+          "response_model": "JobStatus",
+          "status_code": 201
+        },
+        {
+          "handler": "get_job",
+          "method": "GET",
+          "path": "/{workflow_id}",
+          "response_model": "JobStatus",
+          "status_code": null
+        }
+      ]
+    },
+    {
+      "file": "backend/app/endpoints/realtime.py",
+      "prefix": "/realtime",
+      "routes": [
+        {
+          "handler": "publish_to_channel",
+          "method": "POST",
+          "path": "/{channel}",
+          "response_model": "",
+          "status_code": 204
+        }
+      ]
+    }
+  ],
+  "genesis": {
+    "api_version": "v1",
+    "template": "genesis"
+  },
+  "modules": {
+    "available": [
+      "admin",
+      "ai",
+      "analytics",
+      "auth",
+      "cache",
+      "email",
+      "jobs",
+      "rag",
+      "realtime",
+      "storage"
+    ],
+    "installed": [
+      "admin",
+      "ai",
+      "analytics",
+      "auth",
+      "cache",
+      "email",
+      "jobs",
+      "rag",
+      "realtime",
+      "storage"
+    ],
+    "summaries": {
+      "admin": "User management and a DB-backed permission system, behind an isolated /admin panel",
+      "ai": "Multi-provider LLM calls (LiteLLM)",
+      "analytics": "In-process SQL over Postgres (DuckDB)",
+      "auth": "Email/password login and session verification (bcrypt + JWT, no sidecar service)",
+      "cache": "Key/value cache (Valkey)",
+      "email": "Send email (SMTP, console backend for local dev)",
+      "jobs": "Durable background jobs (Temporal)",
+      "rag": "Embeddings + pgvector similarity search (RAG building blocks)",
+      "realtime": "WebSocket pub/sub (in-process locally, Valkey fanout across workers)",
+      "storage": "File storage / uploads (local disk, S3-compatible in production)"
+    }
+  },
+  "pages": [
+    {
+      "file": "frontend/src/pages/Items.tsx",
+      "nav": "Items",
+      "order": 1,
+      "route": "/"
+    },
+    {
+      "file": "frontend/src/pages/Jobs.tsx",
+      "nav": "Jobs",
+      "order": 2,
+      "route": "/jobs"
+    },
+    {
+      "file": "frontend/src/pages/Chat.tsx",
+      "nav": "Chat",
+      "order": 3,
+      "route": "/chat"
+    },
+    {
+      "file": "frontend/src/pages/Analytics.tsx",
+      "nav": "Analytics",
+      "order": 4,
+      "route": "/analytics"
+    },
+    {
+      "file": "frontend/src/pages/Status.tsx",
+      "nav": "Status",
+      "order": 5,
+      "route": "/status"
+    },
+    {
+      "file": "frontend/src/pages/Admin.tsx",
+      "nav": "Admin",
+      "order": 6,
+      "route": "/admin/*"
+    },
+    {
+      "file": "frontend/src/pages/Auth.tsx",
+      "nav": "Sign in",
+      "order": 99,
+      "route": "/auth"
+    }
+  ],
+  "services": [
+    {
+      "capability": "database",
+      "image": "pgvector/pgvector:pg17",
+      "name": "postgres",
+      "port": 5432
+    },
+    {
+      "capability": "observability",
+      "image": "openobserve/openobserve:v0.14.4",
+      "name": "openobserve",
+      "port": 5080
+    },
+    {
+      "capability": "dbgate",
+      "image": "dbgate/dbgate:latest",
+      "name": "dbgate",
+      "port": 3000
+    },
+    {
+      "capability": "cache",
+      "image": "valkey/valkey:8-bookworm",
+      "name": "valkey",
+      "port": 6379
+    },
+    {
+      "capability": "jobs",
+      "image": "temporalio/auto-setup:1.25.2",
+      "name": "temporal",
+      "port": 7233
+    },
+    {
+      "capability": null,
+      "image": "temporalio/ui:2.31.2",
+      "name": "temporal-ui",
+      "port": 8233
+    }
+  ],
+  "shapes": [
+    {
+      "fields": [
+        {
+          "name": "prompt",
+          "type": "str"
+        }
+      ],
+      "file": "backend/app/models/chat.py",
+      "shape": "ChatRequest"
+    },
+    {
+      "fields": [
+        {
+          "name": "reply",
+          "type": "str"
+        }
+      ],
+      "file": "backend/app/models/chat.py",
+      "shape": "ChatResponse"
+    },
+    {
+      "fields": [
+        {
+          "name": "content",
+          "type": "str"
+        }
+      ],
+      "file": "backend/app/models/document.py",
+      "shape": "DocumentCreate"
+    },
+    {
+      "fields": [
+        {
+          "name": "id",
+          "type": "int"
+        },
+        {
+          "name": "content",
+          "type": "str"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime"
+        }
+      ],
+      "file": "backend/app/models/document.py",
+      "shape": "DocumentRead"
+    },
+    {
+      "fields": [
+        {
+          "name": "query",
+          "type": "str"
+        },
+        {
+          "name": "k",
+          "type": "int"
+        }
+      ],
+      "file": "backend/app/models/document.py",
+      "shape": "DocumentSearchRequest"
+    },
+    {
+      "fields": [
+        {
+          "name": "id",
+          "type": "int"
+        },
+        {
+          "name": "content",
+          "type": "str"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime"
+        }
+      ],
+      "file": "backend/app/models/document.py",
+      "shape": "DocumentSearchResult"
+    },
+    {
+      "fields": [
+        {
+          "name": "name",
+          "type": "str"
+        },
+        {
+          "name": "description",
+          "type": "str | None"
+        }
+      ],
+      "file": "backend/app/models/item.py",
+      "shape": "ItemCreate"
+    },
+    {
+      "fields": [
+        {
+          "name": "id",
+          "type": "int"
+        },
+        {
+          "name": "name",
+          "type": "str"
+        },
+        {
+          "name": "description",
+          "type": "str | None"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime"
+        }
+      ],
+      "file": "backend/app/models/item.py",
+      "shape": "ItemRead"
+    },
+    {
+      "fields": [
+        {
+          "name": "seconds",
+          "type": "int"
+        }
+      ],
+      "file": "backend/app/models/job.py",
+      "shape": "JobStart"
+    },
+    {
+      "fields": [
+        {
+          "name": "workflow_id",
+          "type": "str"
+        },
+        {
+          "name": "status",
+          "type": "str"
+        },
+        {
+          "name": "result",
+          "type": "str | None"
+        }
+      ],
+      "file": "backend/app/models/job.py",
+      "shape": "JobStatus"
+    },
+    {
+      "fields": [
+        {
+          "name": "method",
+          "type": "str"
+        },
+        {
+          "name": "path",
+          "type": "str"
+        },
+        {
+          "name": "role",
+          "type": "str"
+        }
+      ],
+      "file": "backend/app/models/permission.py",
+      "shape": "PermissionRuleCreate"
+    },
+    {
+      "fields": [
+        {
+          "name": "id",
+          "type": "int"
+        },
+        {
+          "name": "method",
+          "type": "str"
+        },
+        {
+          "name": "path",
+          "type": "str"
+        },
+        {
+          "name": "role",
+          "type": "str"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime"
+        }
+      ],
+      "file": "backend/app/models/permission.py",
+      "shape": "PermissionRuleRead"
+    },
+    {
+      "fields": [
+        {
+          "name": "day",
+          "type": "date"
+        },
+        {
+          "name": "count",
+          "type": "int"
+        }
+      ],
+      "file": "backend/app/models/summary.py",
+      "shape": "DayCount"
+    },
+    {
+      "fields": [
+        {
+          "name": "total",
+          "type": "int"
+        },
+        {
+          "name": "by_day",
+          "type": "list[DayCount]"
+        }
+      ],
+      "file": "backend/app/models/summary.py",
+      "shape": "ItemsSummary"
+    },
+    {
+      "fields": [
+        {
+          "name": "email",
+          "type": "EmailStr"
+        },
+        {
+          "name": "name",
+          "type": "str"
+        },
+        {
+          "name": "password",
+          "type": "str"
+        }
+      ],
+      "file": "backend/app/models/user.py",
+      "shape": "UserSignup"
+    },
+    {
+      "fields": [
+        {
+          "name": "email",
+          "type": "EmailStr"
+        },
+        {
+          "name": "password",
+          "type": "str"
+        }
+      ],
+      "file": "backend/app/models/user.py",
+      "shape": "UserLogin"
+    },
+    {
+      "fields": [
+        {
+          "name": "id",
+          "type": "int"
+        },
+        {
+          "name": "email",
+          "type": "str"
+        },
+        {
+          "name": "name",
+          "type": "str"
+        },
+        {
+          "name": "roles",
+          "type": "list[str]"
+        }
+      ],
+      "file": "backend/app/models/user.py",
+      "shape": "UserRead"
+    },
+    {
+      "fields": [
+        {
+          "name": "roles",
+          "type": "list[str]"
+        }
+      ],
+      "file": "backend/app/models/user.py",
+      "shape": "UserUpdateRoles"
+    },
+    {
+      "fields": [
+        {
+          "name": "id",
+          "type": "int"
+        },
+        {
+          "name": "email",
+          "type": "str"
+        },
+        {
+          "name": "name",
+          "type": "str"
+        },
+        {
+          "name": "roles",
+          "type": "list[str]"
+        },
+        {
+          "name": "active",
+          "type": "bool"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime"
+        }
+      ],
+      "file": "backend/app/models/user.py",
+      "shape": "UserAdminRead"
+    }
+  ],
+  "tables": [
+    {
+      "columns": [
+        {
+          "name": "content",
+          "null": false,
+          "type": "Text"
+        },
+        {
+          "name": "embedding",
+          "null": false,
+          "type": "VectorField"
+        },
+        {
+          "name": "created_at",
+          "null": false,
+          "type": "DateTime"
+        }
+      ],
+      "file": "backend/app/models/document.py",
+      "model": "Document",
+      "table": "documents"
+    },
+    {
+      "columns": [
+        {
+          "name": "name",
+          "null": false,
+          "type": "Char"
+        },
+        {
+          "name": "description",
+          "null": true,
+          "type": "Text"
+        },
+        {
+          "name": "created_at",
+          "null": false,
+          "type": "DateTime"
+        }
+      ],
+      "file": "backend/app/models/item.py",
+      "model": "Item",
+      "table": "items"
+    },
+    {
+      "columns": [
+        {
+          "name": "method",
+          "null": false,
+          "type": "Char"
+        },
+        {
+          "name": "path",
+          "null": false,
+          "type": "Char"
+        },
+        {
+          "name": "role",
+          "null": false,
+          "type": "Char"
+        },
+        {
+          "name": "created_at",
+          "null": false,
+          "type": "DateTime"
+        }
+      ],
+      "file": "backend/app/models/permission.py",
+      "model": "PermissionRule",
+      "table": "permission_rules"
+    },
+    {
+      "columns": [
+        {
+          "name": "email",
+          "null": false,
+          "type": "Char"
+        },
+        {
+          "name": "name",
+          "null": false,
+          "type": "Char"
+        },
+        {
+          "name": "password_hash",
+          "null": false,
+          "type": "Char"
+        },
+        {
+          "name": "roles",
+          "null": false,
+          "type": "Char"
+        },
+        {
+          "name": "active",
+          "null": false,
+          "type": "Bool"
+        },
+        {
+          "name": "created_at",
+          "null": false,
+          "type": "DateTime"
+        }
+      ],
+      "file": "backend/app/models/user.py",
+      "model": "User",
+      "table": "users"
+    }
+  ],
+  "tasks": [
+    {
+      "file": "backend/app/tasks/demo.py",
+      "task": "demo_sleep"
+    }
+  ]
+}

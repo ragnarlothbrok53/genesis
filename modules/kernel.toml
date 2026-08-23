@@ -1,0 +1,41 @@
+name = "kernel"
+summary = "Always present: database, observability, dashboards, web"
+
+# `capability` is the name the running app reports this service under in /api/status, which is
+# what the app calls it rather than which product provides it.
+[[service]]
+name = "postgres"
+capability = "database"
+port = 5432
+host_env = "POSTGRES_HOST"
+data_dir = "/data/postgres"
+image = "pgvector/pgvector:pg17"
+environment = { POSTGRES_USER = "${POSTGRES_USER:-genesis}", POSTGRES_PASSWORD = "${POSTGRES_PASSWORD:-genesis}", POSTGRES_DB = "${POSTGRES_DB:-genesis}", PGDATA = "/data/postgres/pgdata" }
+
+[[service]]
+name = "openobserve"
+capability = "observability"
+port = 5080
+host_env = "OPENOBSERVE_HOST"
+data_dir = "/data/openobserve"
+image = "openobserve/openobserve:v0.14.4"
+environment = { ZO_DATA_DIR = "/data/openobserve", ZO_BASE_URI = "/o11y", ZO_HTTP_PORT = "5080", ZO_ROOT_USER_EMAIL = "${O2_ROOT_EMAIL:-admin@genesis.local}", ZO_ROOT_USER_PASSWORD = "${O2_ROOT_PASSWORD:-genesis-admin}" }
+
+[[service]]
+name = "dbgate"
+capability = "dbgate"
+port = 3000
+host_env = "DBGATE_HOST"
+data_dir = "/data/dbgate"
+image = "dbgate/dbgate:latest"
+environment = { WEB_ROOT = "/db", CONNECTIONS = "pg", LABEL_pg = "App Postgres", SERVER_pg = "postgres", PORT_pg = "5432", USER_pg = "${POSTGRES_USER:-genesis}", PASSWORD_pg = "${POSTGRES_PASSWORD:-genesis}", ENGINE_pg = "postgres@dbgate-plugin-postgres" }
+
+[[process]]
+name = "fastapi"
+port = 8000
+command = "uv run --no-sync uvicorn genesis.main:app --host 0.0.0.0 --port 8000 --timeout-keep-alive 300"
+
+[[process]]
+name = "nginx"
+port = 80
+command = '/usr/sbin/nginx -g "daemon off;"'

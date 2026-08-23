@@ -1,0 +1,12 @@
+**/.venv
+**/node_modules
+**/__pycache__
+**/*.pyc
+**/.git
+**/.pytest_cache
+frontend/dist
+archive
+**/*.log
+# Secrets are injected at runtime via compose env_file, never baked into the image
+.env
+**/.env

@@ -1,0 +1,16 @@
+# Presets are named module sets. `genesis create x --preset api` keeps only these modules.
+[api]
+summary = "JSON API and database only — no frontend demos beyond items"
+modules = ["cache"]
+
+[saas]
+summary = "Database, cache, background jobs and analytics"
+modules = ["cache", "jobs", "analytics"]
+
+[ai-app]
+summary = "LLM calls, cache and analytics"
+modules = ["ai", "cache", "analytics"]
+
+[full]
+summary = "Everything the reference app ships with"
+modules = ["admin", "ai", "analytics", "auth", "cache", "email", "jobs", "rag", "realtime", "storage"]

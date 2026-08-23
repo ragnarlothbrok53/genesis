@@ -1,0 +1,31 @@
+.claude/
+.vscode/
+__pycache__/
+test_genesis_example/
+.env
+*.pyc
+*.log
+*.tmp
+.DS_Store
+
+node_modules/
+frontend/dist/
+.venv/
+data/
+deploy/certs/*.crt
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+htmlcov/
+.coverage
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key
+.beads/
+
+# Local agent tool state
+.agents/
+.codex/

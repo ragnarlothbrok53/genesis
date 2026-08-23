@@ -1,0 +1,42 @@
+name = "jobs"
+summary = "Durable background jobs (Temporal)"
+requires = []
+
+python_deps = [
+  "temporalio>=1.27,<2",
+]
+
+# A module that owns a table lists its backend/migrations/NNN_*.py here too, so excluding the
+# module removes the migration with it. peewee-migrate sorts by filename and tolerates gaps.
+files = [
+  "backend/genesis/services/jobs.py",
+  "backend/genesis/worker.py",
+  "backend/app/tasks/",
+  "backend/app/models/job.py",
+  "backend/app/endpoints/jobs.py",
+  "frontend/src/pages/Jobs.tsx",
+]
+
+# TEMPORAL_NAMESPACE / TEMPORAL_TASK_QUEUE and the /temporal/ nginx location are marked with
+# `# module:jobs` directly in settings.toml / nginx.conf — that's what the renderer reads.
+[[service]]
+name = "temporal"
+capability = "jobs"
+port = 7233
+host_env = "TEMPORAL_HOST"
+data_dir = "/data/temporal"
+image = "temporalio/auto-setup:1.25.2"
+command = "/usr/local/bin/temporal server start-dev --ip 127.0.0.1 --port 7233 --ui-port 8233 --ui-public-path /temporal --db-filename /data/temporal/temporal.db --namespace default --log-level warn --ui-disable-news-fetch"
+environment = { DB = "postgres12", DB_PORT = "5432", POSTGRES_SEEDS = "postgres", POSTGRES_USER = "${POSTGRES_USER:-genesis}", POSTGRES_PWD = "${POSTGRES_PASSWORD:-genesis}" }
+
+# start-dev bundles the web UI; the compose server image does not, so it needs its own container
+[[service]]
+name = "temporal-ui"
+port = 8233
+image = "temporalio/ui:2.31.2"
+compose_only = true
+environment = { TEMPORAL_ADDRESS = "temporal:7233", TEMPORAL_UI_PORT = "8233", TEMPORAL_UI_PUBLIC_PATH = "/temporal" }
+
+[[process]]
+name = "temporal-worker"
+command = "uv run --no-sync python -m genesis.worker"

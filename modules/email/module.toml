@@ -1,0 +1,11 @@
+name = "email"
+summary = "Send email (SMTP, console backend for local dev)"
+requires = []
+
+python_deps = [
+  "aiosmtplib>=3.0.2",
+]
+
+files = [
+  "backend/genesis/services/email.py",
+]

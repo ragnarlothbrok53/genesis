@@ -1,0 +1,17 @@
+name = "ai"
+summary = "Multi-provider LLM calls (LiteLLM)"
+requires = []
+
+python_deps = [
+  "litellm>=1.55.0",
+]
+
+# Settings and env vars this module owns (LLM_BASE_URL, LLM_MODEL, LLM_API_KEY,
+# LLM_EXTRA_HEADERS) are marked with `# module:ai` in settings.toml / .env.example directly —
+# that's the single source of truth the renderer reads, so it isn't repeated here.
+files = [
+  "backend/genesis/services/llm.py",
+  "backend/app/models/chat.py",
+  "backend/app/endpoints/ai.py",
+  "frontend/src/pages/Chat.tsx",
+]

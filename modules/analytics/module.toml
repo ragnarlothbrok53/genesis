@@ -1,0 +1,14 @@
+name = "analytics"
+summary = "In-process SQL over Postgres (DuckDB)"
+requires = ["database"]
+
+python_deps = [
+  "duckdb>=1.1.0",
+]
+
+files = [
+  "backend/genesis/services/analytics.py",
+  "backend/app/models/summary.py",
+  "backend/app/endpoints/analytics.py",
+  "frontend/src/pages/Analytics.tsx",
+]

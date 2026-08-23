@@ -1,0 +1,56 @@
+[project]
+name = "genesis-backend"
+version = "0.1.0"
+description = "Single-container starter template backend"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.122.0",
+    "uvicorn[standard]>=0.38.0",
+    "dynaconf>=3.2.12",
+    "python-dotenv>=1.2.1",
+    "pydantic>=2.12.0",
+    "peewee>=3.17.8,<4",
+    "peewee-migrate>=1.13.0",
+    "psycopg2-binary>=2.9.10",
+    "duckdb>=1.1.0", # module:analytics
+    "redis>=7.1.0", # module:cache
+    "temporalio>=1.27,<2", # module:jobs
+    "litellm>=1.55.0", # module:ai
+    "aiosmtplib>=3.0.2", # module:email
+    "pgvector>=0.5.0", # module:rag
+    "fsspec>=2024.10.0", # module:storage
+    "s3fs>=2024.10.0", # module:storage
+    "bcrypt>=4.2", # module:auth
+    "pyjwt>=2.9", # module:auth
+    "email-validator>=2.2", # module:auth
+    "httpx>=0.28.1",
+    "opentelemetry-sdk>=1.30.0",
+    "opentelemetry-exporter-otlp-proto-http>=1.30.0",
+    "opentelemetry-instrumentation-fastapi>=0.51b0",
+    "opentelemetry-instrumentation-psycopg2>=0.51b0",
+    "opentelemetry-instrumentation-httpx>=0.51b0",
+    "opentelemetry-instrumentation-redis>=0.51b0", # module:cache
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.9.0",
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+]
+local = [
+    "pgembed>=0.2.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+extend-exclude = [".venv", "migrations"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]

@@ -1,0 +1,17 @@
+name = "admin"
+summary = "User management and a DB-backed permission system, behind an isolated /admin panel"
+requires = ["auth"]
+
+npm_deps = [
+  "@tanstack/react-table@^8.20.0",
+]
+
+files = [
+  "backend/app/models/permission.py",
+  "backend/app/endpoints/admin_users.py",
+  "backend/app/endpoints/admin_permissions.py",
+  "backend/genesis/services/permissions.py",
+  "backend/migrations/004_add_permission_rules.py",
+  "frontend/src/admin/",
+  "frontend/src/pages/Admin.tsx",
+]

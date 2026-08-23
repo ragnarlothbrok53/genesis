@@ -1,0 +1,10 @@
+name = "realtime"
+summary = "WebSocket pub/sub (in-process locally, Valkey fanout across workers)"
+requires = []
+
+python_deps = []
+
+files = [
+  "backend/genesis/services/realtime.py",
+  "backend/app/endpoints/realtime.py",
+]

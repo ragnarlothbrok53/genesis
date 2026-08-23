@@ -1,0 +1,16 @@
+name = "rag"
+summary = "Embeddings + pgvector similarity search (RAG building blocks)"
+requires = ["ai"]
+
+python_deps = [
+  "pgvector>=0.5.0",
+]
+
+# Postgres runs the pgvector/pgvector image (see modules/kernel.toml) so the `vector` extension
+# is available; the embed()/similarity_search() helpers themselves live in the `ai` module's
+# backend/genesis/services/llm.py and aren't repeated here.
+files = [
+  "backend/app/models/document.py",
+  "backend/app/endpoints/documents.py",
+  "backend/migrations/002_documents.py",
+]

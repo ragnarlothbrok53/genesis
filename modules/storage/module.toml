@@ -1,0 +1,12 @@
+name = "storage"
+summary = "File storage / uploads (local disk, S3-compatible in production)"
+requires = []
+
+python_deps = [
+  "fsspec>=2024.10.0",
+  "s3fs>=2024.10.0",
+]
+
+files = [
+  "backend/genesis/services/storage.py",
+]

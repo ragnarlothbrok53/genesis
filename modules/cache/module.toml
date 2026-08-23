@@ -1,0 +1,21 @@
+name = "cache"
+summary = "Key/value cache (Valkey)"
+requires = []
+
+python_deps = [
+  "redis>=7.1.0",
+  "opentelemetry-instrumentation-redis>=0.51b0",
+]
+
+files = [
+  "backend/genesis/services/cache.py",
+]
+
+[[service]]
+name = "valkey"
+capability = "cache"
+port = 6379
+host_env = "VALKEY_HOST"
+data_dir = "/data/valkey"
+image = "valkey/valkey:8-bookworm"
+command = '/usr/local/bin/valkey-server --port 6379 --dir /data/valkey --save "" --appendonly no'

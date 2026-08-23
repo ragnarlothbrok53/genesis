@@ -1,0 +1,47 @@
+# ==== INFRA — do not edit ====
+services:
+  app:
+    profiles: ["prod"]
+    image: ${IMAGE_NAME:-genesis}:${IMAGE_TAG:-latest}
+    build:
+      context: .
+    ports:
+      - "${HOST_PORT:-8000}:80"
+    environment:
+      ENV_FOR_DYNACONF: ${ENV_FOR_DYNACONF:-production}
+      POSTGRES_USER: ${POSTGRES_USER:-genesis}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-genesis}
+      POSTGRES_DB: ${POSTGRES_DB:-genesis}
+      O2_ROOT_EMAIL: ${O2_ROOT_EMAIL:-admin@genesis.local}
+      O2_ROOT_PASSWORD: ${O2_ROOT_PASSWORD:-genesis-admin}
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - genesis_data:/data
+
+  app_dev:
+    profiles: ["dev"]
+    image: ${IMAGE_NAME:-genesis}:${IMAGE_TAG:-latest}
+    build:
+      context: .
+    ports:
+      - "8000:80"
+    environment:
+      ENV_FOR_DYNACONF: development
+      POSTGRES_USER: ${POSTGRES_USER:-genesis}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-genesis}
+      POSTGRES_DB: ${POSTGRES_DB:-genesis}
+      O2_ROOT_EMAIL: ${O2_ROOT_EMAIL:-admin@genesis.local}
+      O2_ROOT_PASSWORD: ${O2_ROOT_PASSWORD:-genesis-admin}
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./backend:/app/backend
+      - /app/backend/.venv
+      - genesis_data_dev:/data
+
+volumes:
+  genesis_data:
+  genesis_data_dev:

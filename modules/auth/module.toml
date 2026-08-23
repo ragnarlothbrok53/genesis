@@ -1,0 +1,23 @@
+name = "auth"
+summary = "Email/password login and session verification (bcrypt + JWT, no sidecar service)"
+requires = []
+
+python_deps = [
+  "bcrypt>=4.2",
+  "pyjwt>=2.9",
+]
+
+# A module that owns a table lists its generated backend/migrations/NNN_*.py here too, so
+# excluding the module removes the migration with it. peewee-migrate sorts by filename and
+# tolerates gaps.
+#
+# AUTH_SECRET is marked with `# module:auth` in settings.toml / .env.example directly, same
+# as the other modules. The header-passthrough path in genesis/core/identity.py keeps working
+# without this module — this session verification is additive on top of it.
+files = [
+  "backend/genesis/services/auth.py",
+  "backend/app/models/user.py",
+  "backend/app/endpoints/auth.py",
+  "backend/migrations/003_add_users.py",
+  "frontend/src/pages/Auth.tsx",
+]
