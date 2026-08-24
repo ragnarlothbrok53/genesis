@@ -102,17 +102,30 @@ def _serve_command(backend_dir: Path, dist_dir: Path | None) -> list[str]:
         str(dist_dir) if dist_dir else "",
     ]
 
+def _init_deps() -> list[str]:
+    return [
+        "uv",
+        "sync",
+        "--frozen",
+        "--no-dev"
+    ]
 
 def dev_local(root: Path) -> int:
     uv_present, node_present = _report_checks()
+
     if not uv_present:
         raise LocalError("uv is required for local mode — install it and re-run 'genesis dev --local'")
 
     dist_dir = _prepare_frontend(root, node_present)
 
     backend_dir = root / "backend"
+
     command = _serve_command(backend_dir, dist_dir)
     env = {**os.environ, "CACHE_BACKEND": "embedded", "PYTHONPATH": str(backend_dir)}
     print(f"$ {' '.join(command)}")
+
+    # Install uv dependencies
+    subprocess.run(_init_deps, cwd=backend_dir, env=env, check=False)
+    
     result = subprocess.run(command, cwd=backend_dir, env=env, check=False)
     return result.returncode
